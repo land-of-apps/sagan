@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '2.5.0'
     id 'org.asciidoctor.jvm.convert' version '3.1.0'
     id 'com.gorylenko.gradle-git-properties' version '2.2.4'
+    id 'com.appland.appmap' version '1.1.0-SNAPSHOT'
 }
 
 apply plugin: 'io.spring.dependency-management'
