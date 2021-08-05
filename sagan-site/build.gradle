@@ -1,8 +1,8 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.5.0'
-	id 'org.asciidoctor.jvm.convert' version '3.1.0'
-	id 'com.gorylenko.gradle-git-properties' version '2.2.4'
+    id 'java'
+    id 'org.springframework.boot' version '2.5.0'
+    id 'org.asciidoctor.jvm.convert' version '3.1.0'
+    id 'com.gorylenko.gradle-git-properties' version '2.2.4'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -12,19 +12,20 @@ group = 'io.spring.sagan'
 version = "1.0.0-SNAPSHOT"
 sourceCompatibility = '1.8'
 
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
 ext {
-	snippetsDir = file('build/generated-snippets')
+    snippetsDir = file('build/generated-snippets')
 }
 
 configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
-}
-
-repositories {
-	mavenCentral()
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
 }
 
 dependencyManagement {
@@ -34,97 +35,97 @@ dependencyManagement {
 }
 
 dependencies {
-	implementation project(':sagan-client')
+    implementation project(':sagan-client')
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.hibernate:hibernate-java8'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.security:spring-security-oauth2-client'
-	implementation 'org.springframework.security:spring-security-oauth2-jose'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.hibernate:hibernate-java8'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-oauth2-client'
+    implementation 'org.springframework.security:spring-security-oauth2-jose'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-	// for use in on-the-fly database setup and migrations
-	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.apache.httpcomponents:httpclient'
-	implementation 'org.modelmapper:modelmapper:2.4.4'
-	implementation 'org.jsoup:jsoup:1.13.1'
-	implementation 'org.yaml:snakeyaml'
-	// for XML manipulation
-	implementation 'org.xmlbeam:xmlprojector:1.4.20'
-	// for use in generating blog atom feeds
-	implementation 'com.rometools:rome:1.15.0'
-	// for use in serving redirects; see urlrewrite.xml
-	implementation 'org.tuckey:urlrewritefilter:4.0.4'
+    // for use in on-the-fly database setup and migrations
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.apache.httpcomponents:httpclient'
+    implementation 'org.modelmapper:modelmapper:2.4.4'
+    implementation 'org.jsoup:jsoup:1.13.1'
+    implementation 'org.yaml:snakeyaml'
+    // for XML manipulation
+    implementation 'org.xmlbeam:xmlprojector:1.4.20'
+    // for use in generating blog atom feeds
+    implementation 'com.rometools:rome:1.15.0'
+    // for use in serving redirects; see urlrewrite.xml
+    implementation 'org.tuckey:urlrewritefilter:4.0.4'
 
-	// Thymeleaf is used as the template engine for serving HTML
-	implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time'
-	implementation 'com.github.mxab.thymeleaf.extras:thymeleaf-extras-data-attribute'
+    // Thymeleaf is used as the template engine for serving HTML
+    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time'
+    implementation 'com.github.mxab.thymeleaf.extras:thymeleaf-extras-data-attribute'
 
-	// for CloudFoundry service binding
-	implementation "io.pivotal.cfenv:java-cfenv-boot:2.3.0"
+    // for CloudFoundry service binding
+    implementation "io.pivotal.cfenv:java-cfenv-boot:2.3.0"
 
-	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-	// datasource and connection pool dependencies
-	runtimeOnly 'mysql:mysql-connector-java'
-	runtimeOnly 'com.h2database:h2'
+    // datasource and connection pool dependencies
+    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.h2database:h2'
 
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	testImplementation "org.testcontainers:testcontainers:1.15.3"
-	testImplementation "org.testcontainers:junit-jupiter:1.15.3"
+    testImplementation "org.testcontainers:testcontainers:1.15.3"
+    testImplementation "org.testcontainers:junit-jupiter:1.15.3"
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-	testImplementation 'org.springframework.security:spring-security-test'
-	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-	testImplementation(platform("org.springframework.cloud:spring-cloud-contract-dependencies:3.0.2"))
-	testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation(platform("org.springframework.cloud:spring-cloud-contract-dependencies:3.0.2"))
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
 }
 
 test {
-	useJUnitPlatform()
-	outputs.dir snippetsDir
+    useJUnitPlatform()
+    outputs.dir snippetsDir
 }
 
 asciidoctor {
-	attributes 'snippets': snippetsDir
-	dependsOn test
+    attributes 'snippets': snippetsDir
+    dependsOn test
 }
 
 bootJar {
-	dependsOn asciidoctor
-	from("${asciidoctor.outputDir}/index.html") {
-		into 'static/restdocs'
-	}
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}/index.html") {
+        into 'static/restdocs'
+    }
 }
 
 task stubsJar(type: Jar) {
-	archiveClassifier.set("stubs")
-	into('/sagan/site/webapi/') {
-		include('**/*Metadata.*')
-		from("${project.projectDir}/src/main/java/sagan/site/webapi/")
-		from("${project.buildDir}/classes/java/main/sagan/site/webapi/")
-	}
-	into("META-INF/${project.group}/${project.name}/${project.version}/mappings") {
-		include('**/*.*')
-		from("${project.buildDir}/generated-snippets/stubs")
-	}
+    archiveClassifier.set("stubs")
+    into('/sagan/site/webapi/') {
+        include('**/*Metadata.*')
+        from("${project.projectDir}/src/main/java/sagan/site/webapi/")
+        from("${project.buildDir}/classes/java/main/sagan/site/webapi/")
+    }
+    into("META-INF/${project.group}/${project.name}/${project.version}/mappings") {
+        include('**/*.*')
+        from("${project.buildDir}/generated-snippets/stubs")
+    }
 }
 
 build.dependsOn("stubsJar")
 
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			artifact stubsJar
-		}
-	}
+    publications {
+        mavenJava(MavenPublication) {
+            artifact stubsJar
+        }
+    }
 }
