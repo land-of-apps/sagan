@@ -10,7 +10,8 @@ data/
 tmp/
 *.sw[op]
 classes/
-test.log
+*.log
+*.tgz
 logs/
 work/
 .bower-*
@@ -51,3 +52,7 @@ sagan.java.hsp
 jspm_packages/
 npm-debug.log
 .cram/
+
+# AppMap
+*.appmap.json
+
