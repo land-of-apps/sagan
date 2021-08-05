@@ -1,3 +1,10 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 rootProject.name = 'sagan'
 
 include 'sagan-site', 'sagan-client', 'sagan-renderer'
